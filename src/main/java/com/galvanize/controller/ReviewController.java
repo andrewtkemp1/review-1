@@ -29,4 +29,14 @@ public class ReviewController {
     public Review getOneMovieReviewByimdbId(@PathVariable String imdbId){
         return reviewService.findReviewByImdbId(imdbId);
     }
+
+//    @PutMapping("/rating/{movieId}")
+//    public Movie updateMovieWithStarRating(@PathVariable long movieId, @RequestBody Movie movie){
+//        return movieService.updateMovieWithStarRating(movieId, movie);
+//    }
+
+    @DeleteMapping("/{id}")
+    public boolean updateMovie(@PathVariable long id){
+        return reviewService.deleteById(id);
+    }
 }

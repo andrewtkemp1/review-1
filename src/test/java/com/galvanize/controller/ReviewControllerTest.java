@@ -16,9 +16,10 @@ import javax.transaction.Transactional;
 import java.util.ArrayList;
 
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -58,7 +59,7 @@ public class ReviewControllerTest {
     }
 
     @Test
-    public void getMovieReviewByimdbId() throws Exception {
+    public void getOneMovieReviewByimdbId() throws Exception {
         Review expected = new Review();
         expected.setReviewId(1L);
         when(reviewService.findReviewByImdbId("tt0241527")).thenReturn(expected);
@@ -66,5 +67,24 @@ public class ReviewControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.imdbId").value(expected.getImdbId()))
                 .andExpect(jsonPath("$.reviewId").value(expected.getReviewId()));
+    }
+
+//    @Test
+//    public void updateMovie() throws Exception {
+//        Movie expected = new Movie();
+//        expected.setMovieId(1L);
+//        String json = objectMapper.writeValueAsString(expected);
+//        when(movieService.updateMovieWithStarRating(anyLong(), any(Movie.class))).thenReturn(expected);
+//        mvc.perform(put("/api/movies/rating/1").content(json).contentType(MediaType.APPLICATION_JSON))
+//                .andExpect(status().isOk())
+//                .andExpect(jsonPath("$.movieId").value(expected.getMovieId()));
+//    }
+
+    @Test
+    public void deleteReviewById() throws Exception {
+        when(reviewService.deleteById(anyLong())).thenReturn(true);
+        mvc.perform(delete("/api/reviews/1"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$").value(true));
     }
 }
