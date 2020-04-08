@@ -13,7 +13,8 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.ArgumentMatchers.any;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.when;
 
 @SpringBootTest
@@ -37,10 +38,30 @@ public class ReviewServiceTest {
     public void getAllReviews(){
         Review expected = new Review(1L, "xyz@xyz.com", "tt0241527", "Harry Potter and the Sorcerer's Stone", 4, "hello");
         ArrayList<Review> expectedReviews = new ArrayList<>();
-        String url = "imdb.com";
-        ArrayList<Object>
+        //String url = "imdb.com";
         expectedReviews.add(expected);
         when(reviewRepository.findAll()).thenReturn(expectedReviews);
         assertEquals(expectedReviews, reviewService.getAllReviews());
+    }
+
+    @Test
+    public void getMovieByImdbId(){
+        Review expected = new Review(1L, "xyz@xyz.com", "tt0241527", "Harry Potter and the Sorcerer's Stone", 4, "hello");
+        when(reviewRepository.findReviewByImdbId(anyString())).thenReturn(expected);
+        assertEquals(expected, reviewService.findReviewByImdbId("tt0241527"));
+    }
+
+    @Test
+    public void updateMovieWithStarRating(){
+        ReviewService reviewService = new ReviewService(reviewRepository);
+        Review expected = reviewService.postReview(new Review(1L, "xyz@xyz.com", "tt0241527", "Harry Potter and the Sorcerer's Stone", 4, "hello"));
+        when(reviewService.findReviewByImdbId(anyString())).thenReturn(expected);
+        assertEquals(expected, reviewService.findReviewByImdbId("tt0241527"));
+    }
+
+    @Test
+    public void deleteMovie(){
+        when(reviewRepository.deleteById(anyLong())).thenReturn(true);
+        assertTrue(reviewService.deleteById(1L));
     }
 }

@@ -22,4 +22,18 @@ public class ReviewService {
     public List<Review> getAllReviews(){
         return reviewRepository.findAll();
     }
+
+    public Review findReviewByImdbId(String imdbId) {
+        return reviewRepository.findReviewByImdbId(imdbId);
+    }
+
+    public Review updateMovieWithStarRating(long reviewId, Review rating) {
+        Review newReview = updateMovieWithStarRating(reviewId, rating);
+        newReview.update(newReview);
+        return postReview(newReview);
+    }
+
+    public boolean deleteById (long reviewId){
+        return reviewRepository.deleteById(reviewId);
+    }
 }
