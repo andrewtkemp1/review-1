@@ -14,6 +14,8 @@ public class Review {
     private long reviewId;
     @Column(name = "email")
     private String email;
+    @Column(name = "imdbId")
+    private String imdbId;
     @Column(name = "title")
     private String title;
     @Column(name = "rating")
@@ -24,20 +26,30 @@ public class Review {
     public Review() {
     }
 
-    public Review(long reviewId, String email, String title, long rating, String text){
+    public Review(long reviewId, String email, String imdbId, String title, long rating, String text){
         this.reviewId = reviewId;
         this.email = email;
+        this.imdbId = imdbId;
         this.title = title;
         this.rating = rating;
         this.text = text;
     }
 
-    public Review(String email, String title, long rating, String text){
+    public Review(String email, String imdbId, String title, long rating, String text){
         this.reviewId = reviewId;
         this.email = email;
+        this.imdbId = imdbId;
         this.title = title;
         this.rating = rating;
         this.text = text;
+    }
+
+    public String getImdbId() {
+        return imdbId;
+    }
+
+    public void setImdbId(String imdbId) {
+        this.imdbId = imdbId;
     }
 
     public long getReviewId() {
@@ -88,13 +100,14 @@ public class Review {
         return reviewId == review.reviewId &&
                 rating == review.rating &&
                 Objects.equals(email, review.email) &&
+                Objects.equals(imdbId, review.imdbId) &&
                 Objects.equals(title, review.title) &&
                 Objects.equals(text, review.text);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(reviewId, email, title, rating, text);
+        return Objects.hash(reviewId, email, imdbId, title, rating, text);
     }
 
     @Override
@@ -102,6 +115,7 @@ public class Review {
         return "Review{" +
                 "reviewId=" + reviewId +
                 ", email='" + email + '\'' +
+                ", imdbId='" + imdbId + '\'' +
                 ", title='" + title + '\'' +
                 ", rating=" + rating +
                 ", text='" + text + '\'' +
@@ -114,5 +128,6 @@ public class Review {
         if(updateReview.getTitle()!=null)this.setTitle(updateReview.getTitle());
         if(updateReview.getRating()!=0)this.setRating(updateReview.getRating());
         if(updateReview.getText()!=null)this.setTitle(updateReview.getText());
+        if(updateReview.getImdbId()!=null)this.setImdbId(updateReview.getImdbId());
     }
 }
