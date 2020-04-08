@@ -13,8 +13,11 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import javax.transaction.Transactional;
 
+import java.util.ArrayList;
+
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -40,5 +43,17 @@ public class ReviewControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.reviewId").value(expected.getReviewId()));
 
+    }
+
+    @Test
+    public void getAllReviews() throws Exception {
+        Review expected = new Review();
+        expected.setReviewId(1L);
+        ArrayList<Review> review = new ArrayList<>();
+        review.add(expected);
+        when(reviewService.getAllReviews()).thenReturn(review);
+        mvc.perform(get("/api/reviews"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[0].reviewId").value(expected.getReviewId()));
     }
 }
