@@ -69,16 +69,16 @@ public class ReviewControllerTest {
                 .andExpect(jsonPath("$.reviewId").value(expected.getReviewId()));
     }
 
-//    @Test
-//    public void updateMovie() throws Exception {
-//        Movie expected = new Movie();
-//        expected.setMovieId(1L);
-//        String json = objectMapper.writeValueAsString(expected);
-//        when(movieService.updateMovieWithStarRating(anyLong(), any(Movie.class))).thenReturn(expected);
-//        mvc.perform(put("/api/movies/rating/1").content(json).contentType(MediaType.APPLICATION_JSON))
-//                .andExpect(status().isOk())
-//                .andExpect(jsonPath("$.movieId").value(expected.getMovieId()));
-//    }
+    @Test
+    public void updateMovie() throws Exception {
+        Review expected = new Review();
+        expected.setReviewId(1L);
+        String json = objectMapper.writeValueAsString(expected);
+        when(reviewService.updateMovieWithStarRating(anyLong(), any(Review.class))).thenReturn(expected);
+        mvc.perform(put("/api/reviews/rating/1").content(json).contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.reviewId").value(expected.getReviewId()));
+    }
 
     @Test
     public void deleteReviewById() throws Exception {

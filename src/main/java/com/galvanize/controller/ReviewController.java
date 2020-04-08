@@ -30,10 +30,10 @@ public class ReviewController {
         return reviewService.findReviewByImdbId(imdbId);
     }
 
-//    @PutMapping("/rating/{movieId}")
-//    public Movie updateMovieWithStarRating(@PathVariable long movieId, @RequestBody Movie movie){
-//        return movieService.updateMovieWithStarRating(movieId, movie);
-//    }
+    @PutMapping("/rating/{reviewId}")
+    public Review updateMovieReviewWithStarRating(@PathVariable long reviewId, @RequestBody Review review){
+        return reviewService.updateMovieWithStarRating(reviewId, review);
+    }
 
     @DeleteMapping("/{id}")
     public boolean updateMovie(@PathVariable long id){
