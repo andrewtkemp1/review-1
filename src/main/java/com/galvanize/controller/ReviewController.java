@@ -24,4 +24,9 @@ public class ReviewController {
     public List<Review> getAllReviews(){
         return reviewService.getAllReviews();
     }
+
+    @GetMapping("/imdbId/{imdbId}")
+    public Review getOneMovieReviewByimdbId(@PathVariable String imdbId){
+        return reviewService.findReviewByImdbId(imdbId);
+    }
 }

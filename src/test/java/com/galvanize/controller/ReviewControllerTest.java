@@ -56,4 +56,15 @@ public class ReviewControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].reviewId").value(expected.getReviewId()));
     }
+
+    @Test
+    public void getMovieReviewByimdbId() throws Exception {
+        Review expected = new Review();
+        expected.setReviewId(1L);
+        when(reviewService.findReviewByImdbId("tt0241527")).thenReturn(expected);
+        mvc.perform(get("/api/reviews/imdbId/tt0241527"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.imdbId").value(expected.getImdbId()))
+                .andExpect(jsonPath("$.reviewId").value(expected.getReviewId()));
+    }
 }
