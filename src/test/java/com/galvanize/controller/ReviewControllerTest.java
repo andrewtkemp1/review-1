@@ -52,13 +52,15 @@ public class ReviewControllerTest {
     @Test
     public void getAllReviews() throws Exception {
         Review expected = new Review();
-        expected.setReviewId(1L);
+        expected.setImdbId("tt0241527");
         ArrayList<Review> review = new ArrayList<>();
         review.add(expected);
+        when(restService.validate(anyString())).thenReturn(true);
         when(reviewService.getAllReviews()).thenReturn(review);
-        mvc.perform(get("/api/reviews?title=star trek&apiKey=e5a1689e"))
+        mvc.perform(get("/api/reviews?title=startrek&apiKey=e5a1689e"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("[0].rating").value(expected.getRating()))
+                .andExpect(jsonPath("$[0].imdbId").value(expected.getImdbId()))
                 .andExpect(jsonPath("$[0].reviewId").value(expected.getReviewId()));
     }
 
