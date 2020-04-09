@@ -1,6 +1,7 @@
 package com.galvanize.controller;
 
 import com.galvanize.entity.Review;
+import com.galvanize.service.RestService;
 import com.galvanize.service.ReviewService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,15 +13,19 @@ import java.util.List;
 @RequestMapping("/api/reviews")
 public class ReviewController {
     ReviewService reviewService;
-    RestTemplate restTemplate;
+    RestService restService;
 
-    public ReviewController(ReviewService reviewService){
+    public ReviewController(ReviewService reviewService, RestService restService) {
         this.reviewService = reviewService;
+        this.restService = restService;
     }
 
     @PostMapping
-    public Review createMovie(@RequestBody Review input){
-        return reviewService.postReview(input);
+    public ResponseEntity<Review> postReview(@RequestBody Review Post){
+        if(restService.validate(Post.getImdbId())){
+            return ResponseEntity.ok(reviewService.postReview(Post));
+        }
+        return null;
     }
 
     @GetMapping

@@ -2,6 +2,7 @@ package com.galvanize.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.galvanize.entity.Review;
+import com.galvanize.service.RestService;
 import com.galvanize.service.ReviewService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,8 +16,7 @@ import javax.transaction.Transactional;
 
 import java.util.ArrayList;
 
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
@@ -32,18 +32,21 @@ public class ReviewControllerTest {
 
     @MockBean
     ReviewService reviewService;
+
+    @MockBean
+    RestService restService;
     ObjectMapper objectMapper = new ObjectMapper();
 
     @Test
     public void postReview() throws Exception {
         Review expected = new Review();
+        expected.setImdbId("tt0241527");
         String json = objectMapper.writeValueAsString(expected);
-        expected.setReviewId(1L);
+        when(restService.validate(anyString())).thenReturn(true);
         when(reviewService.postReview(any(Review.class))).thenReturn(expected);
         mvc.perform(post("/api/reviews").content(json).contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.reviewId").value(expected.getReviewId()));
-
+                .andExpect(jsonPath("$").value(expected));
     }
 
     @Test
@@ -60,7 +63,7 @@ public class ReviewControllerTest {
     }
 
     @Test
-    public void getOneMovieReviewByimdbId() throws Exception {
+    public void getMovieReviewsByimdbId() throws Exception {
         Review expected = new Review();
         expected.setReviewId(1L);
         when(reviewService.findReviewByImdbId("tt0241527")).thenReturn(expected);
