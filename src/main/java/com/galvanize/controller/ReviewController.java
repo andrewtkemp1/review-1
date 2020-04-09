@@ -12,6 +12,7 @@ import java.util.List;
 @RequestMapping("/api/reviews")
 public class ReviewController {
     ReviewService reviewService;
+    RestTemplate restTemplate;
 
     public ReviewController(ReviewService reviewService){
         this.reviewService = reviewService;
