@@ -37,14 +37,9 @@ public class ReviewController {
         return ResponseEntity.ok(reviewService.getAllReviews());
     }
 
-//    @GetMapping
-//    public List<Review> getAllReviews(){
-//        return reviewService.getAllReviews();
-//    }
-
     @GetMapping("/imdbId/{imdbId}")
-    public Review getOneMovieReviewByimdbId(@PathVariable String imdbId){
-        return reviewService.findReviewByImdbId(imdbId);
+    public ResponseEntity getOneMovieReviewByimdbId(@PathVariable String imdbId){
+        return ResponseEntity.ok(reviewService.findReviewByImdbId(imdbId));
     }
 
     @PutMapping("/rating/{reviewId}")
