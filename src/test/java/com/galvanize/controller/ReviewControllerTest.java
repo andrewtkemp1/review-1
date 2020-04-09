@@ -75,6 +75,7 @@ public class ReviewControllerTest {
                 .andExpect(jsonPath("$.reviewId").value(expected.getReviewId()));
     }
 
+
     @Test
     public void updateMovie() throws Exception {
         Review expected = new Review();

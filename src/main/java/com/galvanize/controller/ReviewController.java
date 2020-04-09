@@ -38,7 +38,7 @@ public class ReviewController {
     }
 
     @GetMapping("/imdbId/{imdbId}")
-    public ResponseEntity getOneMovieReviewByimdbId(@PathVariable String imdbId){
+    public ResponseEntity getOneMovieReviewByimdbId(@PathVariable String imdbId, Object title){
         return ResponseEntity.ok(reviewService.findReviewByImdbId(imdbId));
     }
 
@@ -46,6 +46,7 @@ public class ReviewController {
     public Review updateMovieReviewWithStarRating(@PathVariable long reviewId, @RequestBody Review review){
         return reviewService.updateMovieWithStarRating(reviewId, review);
     }
+
 
     @DeleteMapping("/{id}")
     public boolean updateMovie(@PathVariable long id){
