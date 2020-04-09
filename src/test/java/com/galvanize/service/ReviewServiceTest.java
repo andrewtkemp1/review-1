@@ -38,7 +38,7 @@ public class ReviewServiceTest {
     public void getAllReviews(){
         Review expected = new Review(1L, "xyz@xyz.com", "tt0241527", "Harry Potter and the Sorcerer's Stone", 4, "hello");
         ArrayList<Review> expectedReviews = new ArrayList<>();
-        //String url = "imdb.com";
+        String url = "/api/movies";
         expectedReviews.add(expected);
         when(reviewRepository.findAll()).thenReturn(expectedReviews);
         assertEquals(expectedReviews, reviewService.getAllReviews());

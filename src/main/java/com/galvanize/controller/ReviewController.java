@@ -2,7 +2,9 @@ package com.galvanize.controller;
 
 import com.galvanize.entity.Review;
 import com.galvanize.service.ReviewService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
 
