@@ -53,10 +53,15 @@ public class ReviewControllerTest {
         ArrayList<Review> review = new ArrayList<>();
         review.add(expected);
         when(reviewService.getAllReviews()).thenReturn(review);
-        mvc.perform(get("/api/reviews"))
+        mvc.perform(get("/api/reviews?title=star trek&apiKey=e5a1689e"))
                 .andExpect(status().isOk())
+//                .andExpect(jsonPath("$", hasSize(review.size())))
+//                .andExpect(jsonPath("$.Year").value(expected.getText()))
+                .andExpect(jsonPath("$[0].rating").value(expected.getRating()))
                 .andExpect(jsonPath("$[0].reviewId").value(expected.getReviewId()));
     }
+
+
 
     @Test
     public void getOneMovieReviewByimdbId() throws Exception {
