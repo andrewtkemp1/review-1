@@ -1,6 +1,7 @@
 package com.galvanize.controller;
 
 import com.galvanize.entity.Review;
+import com.galvanize.model.Model;
 import com.galvanize.service.RestService;
 import com.galvanize.service.ReviewService;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +15,9 @@ import java.util.List;
 public class ReviewController {
     ReviewService reviewService;
     RestService restService;
+    RestTemplate restTemplate;
+    private String apiKey = "&apikey=656a57f5";
+    private String url = "http://www.omdbapi.com/";
 
     public ReviewController(ReviewService reviewService, RestService restService) {
         this.reviewService = reviewService;
@@ -27,6 +31,12 @@ public class ReviewController {
         }
         return null;
     }
+
+//    @GetMapping
+//    public ResponseEntity<Model> searchReviews(@RequestParam String searchQuery){
+//        String searchUrl = url + "?s=" + searchQuery + apiKey;
+//        return ResponseEntity.ok(this.restTemplate.getForObject(searchUrl, Model.class));
+//    }
 
     @GetMapping
     public List<Review> getAllReviews(){
