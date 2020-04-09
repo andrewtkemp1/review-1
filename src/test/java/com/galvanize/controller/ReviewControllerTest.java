@@ -53,11 +53,8 @@ public class ReviewControllerTest {
         ArrayList<Review> review = new ArrayList<>();
         review.add(expected);
         when(reviewService.getAllReviews()).thenReturn(review);
-        mvc.perform(get("/api/reviews?title= http://www.omdbapi.com/?t=Cinderella\n" +
-                "+ apiKey\n" +
-                "&apiKey=e5a1689e\n"))
+        mvc.perform(get("/api/reviews"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$[0].rating").value(expected.getRating()))
                 .andExpect(jsonPath("$[0].reviewId").value(expected.getReviewId()));
     }
 
