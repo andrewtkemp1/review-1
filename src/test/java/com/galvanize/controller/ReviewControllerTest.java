@@ -57,7 +57,7 @@ public class ReviewControllerTest {
         review.add(expected);
         when(restService.validate(anyString())).thenReturn(true);
         when(reviewService.getAllReviews()).thenReturn(review);
-        mvc.perform(get("/api/reviews?title=startrek&apiKey=e5a1689e"))
+        mvc.perform(get("/api/reviews?title=startrek&apiKey=656a57f5"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("[0].rating").value(expected.getRating()))
                 .andExpect(jsonPath("$[0].imdbId").value(expected.getImdbId()))
