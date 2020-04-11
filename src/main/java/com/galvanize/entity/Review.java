@@ -2,6 +2,7 @@ package com.galvanize.entity;
 
 import javax.persistence.*;
 import javax.persistence.*;
+import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.util.Objects;
 
@@ -10,62 +11,52 @@ import java.util.Objects;
 public class Review {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "reviewId")
-    private long reviewId;
-    @Column(name = "email")
-    private String email;
-    @Column(name = "imdbId")
-    private String imdbId;
+    @Column(name = "review_id")
+    private long review_id;
+    @Column(name = "user_email")
+    private String user_email;
+    @Column(name = "imdb_id")
+    private String imdb_id;
     @Column(name = "title")
     private String title;
-    @Column(name = "rating")
-    private long rating;
-    @Column(name = "text")
-    private String text;
-
-    public Review() {
-    }
-
-    public Review(long reviewId, String email, String imdbId, String title, long rating, String text){
-        this.reviewId = reviewId;
-        this.email = email;
-        this.imdbId = imdbId;
+    @Column(name = "stars")
+    private String stars;
+    @Column(name = "detail")
+    private String detail;
+    @Column(name = "date")
+    private Timestamp date;
+    public Review() {}
+    public Review(long review_id, String user_email, String imdb_id, String title, String stars, String detail, Timestamp date) {
+        this.review_id = review_id;
+        this.user_email = user_email;
+        this.imdb_id = imdb_id;
         this.title = title;
-        this.rating = rating;
-        this.text = text;
+        this.stars = stars;
+        this.detail = detail;
+        this.date = date;
     }
-
-    public Review(String email, String imdbId, String title, long rating, String text){
-        this.reviewId = reviewId;
-        this.email = email;
-        this.imdbId = imdbId;
+    public Review(String user_email, String imdb_id, String title, String stars, String detail) {
+        this.user_email = user_email;
+        this.imdb_id = imdb_id;
         this.title = title;
-        this.rating = rating;
-        this.text = text;
+        this.stars = stars;
+        this.detail = detail;
     }
 
-    public String getImdbId() {
-        return imdbId;
+    public long getReview_id() {
+        return review_id;
     }
 
-    public void setImdbId(String imdbId) {
-        this.imdbId = imdbId;
+    public void setReview_id(long review_id) {
+        this.review_id = review_id;
     }
 
-    public long getReviewId() {
-        return reviewId;
+    public String getImdb_id() {
+        return imdb_id;
     }
 
-    public void setReviewId(long reviewId) {
-        this.reviewId = reviewId;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
+    public void setImdb_id(String imdb_id) {
+        this.imdb_id = imdb_id;
     }
 
     public String getTitle() {
@@ -76,58 +67,60 @@ public class Review {
         this.title = title;
     }
 
-    public long getRating() {
-        return rating;
+    public  String getStars() {
+        return stars;
     }
 
-    public void setRating(long rating) {
-        this.rating = rating;
+    public void setStars(String  stars) {
+        this.stars = stars;
     }
 
-    public String getText() {
-        return text;
+    public String getDetail() {
+        return detail;
     }
 
-    public void setText(String text) {
-        this.text = text;
+    public void setDetail(String detail) {
+        this.detail = detail;
+    }
+
+    public Timestamp getDate() {
+        return date;
+    }
+
+    public void setDate(Timestamp date) {
+        this.date = date;
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (!(o instanceof Review)) return false;
         Review review = (Review) o;
-        return reviewId == review.reviewId &&
-                rating == review.rating &&
-                Objects.equals(email, review.email) &&
-                Objects.equals(imdbId, review.imdbId) &&
-                Objects.equals(title, review.title) &&
-                Objects.equals(text, review.text);
+        return getReview_id() == review.getReview_id() &&
+                getStars() == review.getStars() &&
+                Objects.equals(user_email, review.user_email) &&
+                Objects.equals(getImdb_id(), review.getImdb_id()) &&
+                Objects.equals(getTitle(), review.getTitle()) &&
+                Objects.equals(getDetail(), review.getDetail()) &&
+                Objects.equals(getDate(), review.getDate());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(reviewId, email, imdbId, title, rating, text);
+        return Objects.hash(getReview_id(), user_email, getImdb_id(), getTitle(), getStars(), getDetail(), getDate());
     }
 
     @Override
     public String toString() {
         return "Review{" +
-                "reviewId=" + reviewId +
-                ", email='" + email + '\'' +
-                ", imdbId='" + imdbId + '\'' +
+                "review_id=" + review_id +
+                ", user_email='" + user_email + '\'' +
+                ", imdb_id='" + imdb_id + '\'' +
                 ", title='" + title + '\'' +
-                ", rating=" + rating +
-                ", text='" + text + '\'' +
+                ", stars=" + stars +
+                ", detail='" + detail + '\'' +
+                ", date=" + date +
                 '}';
     }
 
-    public void update(Review updateReview){
-        if(updateReview.getReviewId()!=0)this.setReviewId(updateReview.getReviewId());
-        if(updateReview.getEmail()!=null)this.setEmail(updateReview.getEmail());
-        if(updateReview.getTitle()!=null)this.setTitle(updateReview.getTitle());
-        if(updateReview.getRating()!=0)this.setRating(updateReview.getRating());
-        if(updateReview.getText()!=null)this.setTitle(updateReview.getText());
-        if(updateReview.getImdbId()!=null)this.setImdbId(updateReview.getImdbId());
-    }
 }

@@ -40,7 +40,7 @@ public class ReviewControllerTest {
     @Test
     public void postReview() throws Exception {
         Review expected = new Review();
-        expected.setImdbId("tt0241527");
+        expected.setImdb_id("tt0241527");
         String json = objectMapper.writeValueAsString(expected);
         when(restService.validate(anyString())).thenReturn(true);
         when(reviewService.postReview(any(Review.class))).thenReturn(expected);
@@ -52,39 +52,39 @@ public class ReviewControllerTest {
     @Test
     public void getAllReviews() throws Exception {
         Review expected = new Review();
-        expected.setImdbId("tt0241527");
+        expected.setImdb_id("tt0241527");
         ArrayList<Review> review = new ArrayList<>();
         review.add(expected);
         when(restService.validate(anyString())).thenReturn(true);
         when(reviewService.getAllReviews()).thenReturn(review);
         mvc.perform(get("/api/reviews?title=startrek&apiKey=656a57f5"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("[0].rating").value(expected.getRating()))
-                .andExpect(jsonPath("$[0].imdbId").value(expected.getImdbId()))
-                .andExpect(jsonPath("$[0].reviewId").value(expected.getReviewId()));
+                .andExpect(jsonPath("[0].rating").value(expected.getStars()))
+                .andExpect(jsonPath("$[0].imdbId").value(expected.getImdb_id()))
+                .andExpect(jsonPath("$[0].reviewId").value(expected.getReview_id()));
     }
 
     @Test
     public void getMovieReviewsByimdbId() throws Exception {
         Review expected = new Review();
-        expected.setReviewId(1L);
+        expected.setReview_id(1L);
         when(reviewService.findReviewByImdbId("tt0241527")).thenReturn(expected);
         mvc.perform(get("/api/reviews/imdbId/tt0241527"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.imdbId").value(expected.getImdbId()))
-                .andExpect(jsonPath("$.reviewId").value(expected.getReviewId()));
+                .andExpect(jsonPath("$.imdbId").value(expected.getImdb_id()))
+                .andExpect(jsonPath("$.reviewId").value(expected.getReview_id()));
     }
 
 
     @Test
     public void updateMovie() throws Exception {
         Review expected = new Review();
-        expected.setReviewId(1L);
+        expected.setReview_id(1L);
         String json = objectMapper.writeValueAsString(expected);
         when(reviewService.updateMovieWithStarRating(anyLong(), any(Review.class))).thenReturn(expected);
         mvc.perform(put("/api/reviews/rating/1").content(json).contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.reviewId").value(expected.getReviewId()));
+                .andExpect(jsonPath("$.reviewId").value(expected.getReview_id()));
     }
 
     @Test

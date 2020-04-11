@@ -25,7 +25,7 @@ public class ReviewController {
 
     @PostMapping
     public ResponseEntity<Review> postReview(@RequestBody Review Post){
-        if(!restService.validate(Post.getImdbId())){
+        if(!restService.validate(Post.getImdb_id())){
             return ResponseEntity.ok(reviewService.postReview(Post));
         }
         return null;

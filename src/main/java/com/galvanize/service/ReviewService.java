@@ -29,7 +29,7 @@ public class ReviewService {
 
     public Review updateMovieWithStarRating(long reviewId, Review rating) {
         Review newReview = updateMovieWithStarRating(reviewId, rating);
-        newReview.update(newReview);
+//        newReview.update(newReview);
         return postReview(newReview);
     }
 
