@@ -15,7 +15,7 @@ public class ReviewController {
     ReviewService reviewService;
     RestService restService;
     RestTemplate restTemplate;
-    private String apiKey = "&apikey=656a57f5";
+    private String apiKey = "&apiKey=e5a1689e";
     private String url = "http://www.omdbapi.com/";
 
     public ReviewController(RestTemplate restTemplate, ReviewService reviewService, RestService restService) {
@@ -25,7 +25,7 @@ public class ReviewController {
 
     @PostMapping
     public ResponseEntity<Review> postReview(@RequestBody Review Post){
-        if(restService.validate(Post.getImdbId())){
+        if(!restService.validate(Post.getImdbId())){
             return ResponseEntity.ok(reviewService.postReview(Post));
         }
         return null;
